@@ -16,10 +16,21 @@ def _flight(transfers: int = 0, return_at: str | None = None) -> FlightPrice:
     )
 
 
-def test_build_message_for_one_way_direct_flight():
+def test_build_message_uses_codes_when_no_names_given():
     message = build_message(_flight())
 
     assert "AGP -> STN" in message
+
+
+def test_build_message_uses_city_names_when_given():
+    message = build_message(_flight(), origin_name="Malaga", destination_name="Londres")
+
+    assert "Malaga (AGP) -> Londres (STN)" in message
+
+
+def test_build_message_for_one_way_direct_flight():
+    message = build_message(_flight())
+
     assert "32 EUR" in message
     assert "Ida: 24/11/2026 - directo - FR" in message
     assert "Vuelta" not in message
