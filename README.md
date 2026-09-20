@@ -1,5 +1,7 @@
 # Flight Deal Hunter
 
+[![Tests](https://github.com/juancarlostorrecillacastro-blip/cazador-vuelos/actions/workflows/tests.yml/badge.svg)](https://github.com/juancarlostorrecillacastro-blip/cazador-vuelos/actions/workflows/tests.yml)
+
 A small automation that watches flight routes and pings you on Telegram the moment a price drops below a threshold you set — and never bugs you twice about the same deal.
 
 Built as a learning project to practice clean separation between business logic, I/O boundaries, and testable code, while shipping something genuinely useful.
@@ -70,8 +72,8 @@ cazador_vuelos/
 **1. Clone and set up a virtual environment**
 
 ```bash
-git clone <this-repo-url>
-cd cazador_vuelos
+git clone https://github.com/juancarlostorrecillacastro-blip/cazador-vuelos.git
+cd cazador-vuelos
 python -m venv .venv
 source .venv/Scripts/activate   # Windows Git Bash; use .venv\Scripts\activate on cmd/PowerShell
 pip install -r requirements-dev.txt
