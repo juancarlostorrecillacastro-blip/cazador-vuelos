@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "DUB",
+    "destination_name": "Dublín",
+    "price": 78,
+    "currency": "EUR",
+    "departure_at": "2026-11-18T06:35:00+01:00",
+    "return_at": "2026-11-25T18:35:00Z",
+    "airline": "FR",
+    "reason": "Muy buen precio para un vuelo directo de larga distancia a Dublín.",
+    "flight_link": "https://www.aviasales.com/search/AGP1811DUB25111",
+    "hotel_name": "To The Beach!",
+    "hotel_price": 689.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho3691905152/",
+    "total_price": 767.0,
+    "notified_at": "2026-09-20T06:03:20.709788+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "ACE",
