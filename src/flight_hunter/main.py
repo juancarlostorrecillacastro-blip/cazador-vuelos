@@ -19,7 +19,12 @@ def run() -> None:
 
 def check_route(route: deal_finder.RouteWatch, creds: config.Credentials) -> None:
     flight = api_client.find_cheapest_price(
-        route.origin, route.destination, route.currency, creds.travelpayouts_token
+        route.origin,
+        route.destination,
+        route.currency,
+        creds.travelpayouts_token,
+        route.departure_month,
+        route.return_month,
     )
 
     if flight is None:
@@ -34,7 +39,7 @@ def check_route(route: deal_finder.RouteWatch, creds: config.Credentials) -> Non
         return
 
     previous_best = storage.get_best_notified_price(
-        storage.DEFAULT_DB_PATH, route.origin, route.destination
+        storage.DEFAULT_DB_PATH, route.origin, route.destination, route.departure_month, route.return_month
     )
     if not deal_finder.is_new_best_price(flight.price, previous_best):
         logger.info(
@@ -45,7 +50,13 @@ def check_route(route: deal_finder.RouteWatch, creds: config.Credentials) -> Non
 
     notifier.send_deal_alert(creds.telegram_bot_token, creds.telegram_chat_id, flight)
     storage.record_notified_price(
-        storage.DEFAULT_DB_PATH, route.origin, route.destination, flight.price, flight.currency
+        storage.DEFAULT_DB_PATH,
+        route.origin,
+        route.destination,
+        route.departure_month,
+        route.return_month,
+        flight.price,
+        flight.currency,
     )
     logger.info(
         "Aviso enviado: %s -> %s a %s %s", route.origin, route.destination, flight.price, flight.currency

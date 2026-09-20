@@ -11,6 +11,8 @@ class RouteWatch:
     destination: str
     max_price: float
     currency: str
+    departure_month: str
+    return_month: str | None = None
 
 
 def parse_routes(search_config: dict) -> list[RouteWatch]:
@@ -21,6 +23,8 @@ def parse_routes(search_config: dict) -> list[RouteWatch]:
             destination=route["destination"],
             max_price=route["max_price"],
             currency=route["currency"],
+            departure_month=route["departure_month"],
+            return_month=route.get("return_month"),
         )
         for route in search_config["routes"]
     ]

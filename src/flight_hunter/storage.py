@@ -1,4 +1,4 @@
-"""Guarda en SQLite el mejor precio ya avisado por ruta."""
+"""Guarda en SQLite el mejor precio ya avisado por ruta y mes concreto."""
 
 import sqlite3
 from contextlib import contextmanager
@@ -17,10 +17,12 @@ def _connect(db_path: Path):
             CREATE TABLE IF NOT EXISTS notified_deals (
                 origin TEXT NOT NULL,
                 destination TEXT NOT NULL,
+                departure_month TEXT NOT NULL,
+                return_month TEXT NOT NULL,
                 best_price REAL NOT NULL,
                 currency TEXT NOT NULL,
                 notified_at TEXT NOT NULL,
-                PRIMARY KEY (origin, destination)
+                PRIMARY KEY (origin, destination, departure_month, return_month)
             )
             """
         )
@@ -30,29 +32,56 @@ def _connect(db_path: Path):
         connection.close()
 
 
-def get_best_notified_price(db_path: Path, origin: str, destination: str) -> float | None:
-    """Devuelve el mejor precio ya avisado para esa ruta, o None si nunca se aviso."""
+def _normalize(return_month: str | None) -> str:
+    # NULL en SQL no es igual a si mismo (NULL != NULL), lo que rompería el
+    # "ON CONFLICT" de la clave primaria. Usamos "" como valor concreto para
+    # "sin vuelta" en vez de dejar la columna en NULL.
+    return return_month or ""
+
+
+def get_best_notified_price(
+    db_path: Path, origin: str, destination: str, departure_month: str, return_month: str | None = None
+) -> float | None:
+    """Devuelve el mejor precio ya avisado para esa ruta y mes, o None si nunca se aviso."""
     with _connect(db_path) as connection:
         row = connection.execute(
-            "SELECT best_price FROM notified_deals WHERE origin = ? AND destination = ?",
-            (origin, destination),
+            """
+            SELECT best_price FROM notified_deals
+            WHERE origin = ? AND destination = ? AND departure_month = ? AND return_month = ?
+            """,
+            (origin, destination, departure_month, _normalize(return_month)),
         ).fetchone()
     return row[0] if row else None
 
 
 def record_notified_price(
-    db_path: Path, origin: str, destination: str, price: float, currency: str
+    db_path: Path,
+    origin: str,
+    destination: str,
+    departure_month: str,
+    return_month: str | None,
+    price: float,
+    currency: str,
 ) -> None:
-    """Guarda (o actualiza) el mejor precio avisado para esa ruta."""
+    """Guarda (o actualiza) el mejor precio avisado para esa ruta y mes."""
     with _connect(db_path) as connection:
         connection.execute(
             """
-            INSERT INTO notified_deals (origin, destination, best_price, currency, notified_at)
-            VALUES (?, ?, ?, ?, ?)
-            ON CONFLICT (origin, destination) DO UPDATE SET
+            INSERT INTO notified_deals
+                (origin, destination, departure_month, return_month, best_price, currency, notified_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (origin, destination, departure_month, return_month) DO UPDATE SET
                 best_price = excluded.best_price,
                 currency = excluded.currency,
                 notified_at = excluded.notified_at
             """,
-            (origin, destination, price, currency, datetime.now(timezone.utc).isoformat()),
+            (
+                origin,
+                destination,
+                departure_month,
+                _normalize(return_month),
+                price,
+                currency,
+                datetime.now(timezone.utc).isoformat(),
+            ),
         )
