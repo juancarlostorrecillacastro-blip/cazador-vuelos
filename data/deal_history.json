@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "KRK",
+    "destination_name": "Cracovia",
+    "price": 79,
+    "currency": "EUR",
+    "departure_at": "2026-11-09T06:20:00+01:00",
+    "return_at": "2026-11-13T21:00:00+01:00",
+    "airline": "FR",
+    "reason": "Muy buen precio para ruta directa a Europa del Este. Por debajo de lo habitual.",
+    "flight_link": "https://www.aviasales.com/search/AGP0911KRK13111",
+    "hotel_name": "MILESTONE Krakow Center Student Living by Tribera",
+    "hotel_price": 112.0,
+    "hotel_nights": 4,
+    "hotel_link": "https://www.hotels.com/ho3237164064/milestone-krakow-center-student-living-cracovia-polonia/",
+    "total_price": 191.0,
+    "notified_at": "2026-09-20T13:02:46.545798+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "BUD",
