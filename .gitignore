@@ -1,0 +1,21 @@
+# Entorno virtual
+.venv/
+
+# Credenciales y configuracion local (nunca se sube)
+.env
+
+# Cache de Python
+__pycache__/
+*.pyc
+
+# Base de datos local (historico de ofertas ya avisadas)
+*.db
+*.sqlite3
+
+# Configuracion real del usuario (rutas/precios que vigila)
+# se sube solo el .example como plantilla
+config/config.yaml
+
+# Archivos de IDE
+.vscode/
+.idea/
