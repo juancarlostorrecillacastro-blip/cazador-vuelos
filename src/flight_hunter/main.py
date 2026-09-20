@@ -23,20 +23,13 @@ def check_origin(origin: str, creds: config.Credentials) -> None:
     )
     logger.info("%s: %s candidatos mas baratos encontrados", origin, len(flights))
 
-    for flight in flights:
-        check_flight(flight, creds)
+    verdicts = ai_judge.judge_deals(flights, creds.gemini_api_key)
+
+    for flight, (is_deal, reason) in zip(flights, verdicts):
+        check_flight(flight, is_deal, reason, creds)
 
 
-def check_flight(flight: api_client.FlightPrice, creds: config.Credentials) -> None:
-    is_deal, reason = ai_judge.is_good_deal(
-        flight.origin,
-        flight.destination,
-        flight.price,
-        flight.currency,
-        flight.airline,
-        flight.transfers,
-        creds.gemini_api_key,
-    )
+def check_flight(flight: api_client.FlightPrice, is_deal: bool, reason: str, creds: config.Credentials) -> None:
     if not is_deal:
         logger.info(
             "%s -> %s: %s %s descartado (%s)",
