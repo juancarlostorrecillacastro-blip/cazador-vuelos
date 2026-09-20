@@ -13,7 +13,7 @@ Every hour (or on demand), for each origin airport:
 1. Fetches the 15 cheapest fares to anywhere in the world, any dates, via the [Travelpayouts Data API](https://www.travelpayouts.com/) — discarding round trips shorter than 4 nights (a same-day round trip is cheap but not a real holiday).
 2. Asks Gemini to judge each one: is this genuinely a bargain for that route, not just "a cheap-looking number"?
 3. For the ones Gemini flags as real deals, checks whether it's cheaper than the last deal already notified for that route — so it won't repeat itself.
-4. Looks up the cheapest hotel for those exact dates (via a RapidAPI hotel search), and adds its real price to the message — this step is optional and silently skipped if it fails, so a hotel-lookup hiccup never blocks a flight alert.
+4. Looks up the cheapest **entire-place** accommodation (apartments/villas, not shared hostel rooms — approximated by name and amenity keywords, since the API has no explicit filter for it) for those exact dates, via a RapidAPI hotel search, and adds its real price to the message. This step is optional and silently skipped if it fails or nothing matches, so a hotel-lookup hiccup never blocks a flight alert.
 5. Sends a nicely formatted Telegram message (bold headers, clickable links, price breakdown) with the flight + hotel total.
 
 Example alert (rendered with Telegram's HTML formatting):

@@ -9,6 +9,15 @@ import requests
 REGIONS_URL = "https://{host}/v2/regions"
 HOTELS_SEARCH_URL = "https://{host}/v3/hotels/search"
 
+# No hay un filtro de "alojamiento entero" en la API, asi que lo aproximamos
+# por palabras clave: apartamentos/villas casi siempre tienen bano privado y
+# cocina propia; los hostales/albergues son los que suelen tener bano o
+# habitacion compartidos.
+ENTIRE_PLACE_KEYWORDS = (
+    "apartamento", "apartamentos", "apart", "estudio", "villa", "casa", "chalet", "loft", "atico", "ático",
+)
+SHARED_SPACE_KEYWORDS = ("hostel", "albergue")
+
 
 @dataclass
 class HotelOffer:
@@ -90,8 +99,23 @@ def select_region_id(regions: list[dict], iata_code: str) -> str | None:
 
 
 def pick_cheapest(properties: list[dict], currency: str, nights: int) -> HotelOffer | None:
-    offers = [offer for offer in (_to_offer(p, currency, nights) for p in properties) if offer]
+    """Elige el mas barato SOLO entre los que parecen alojamiento entero.
+    Si ninguno cumple, devuelve None en vez de ofrecer una opcion compartida."""
+    entire_place_properties = [p for p in properties if is_entire_place(p)]
+    offers = [offer for offer in (_to_offer(p, currency, nights) for p in entire_place_properties) if offer]
     return min(offers, key=lambda offer: offer.total_price) if offers else None
+
+
+def is_entire_place(property_data: dict) -> bool:
+    """Aproxima 'alojamiento entero con bano privado' por nombre y amenities,
+    ya que la API no tiene un filtro explicito para esto."""
+    name = (property_data.get("name") or "").lower()
+    if any(bad in name for bad in SHARED_SPACE_KEYWORDS):
+        return False
+    if any(good in name for good in ENTIRE_PLACE_KEYWORDS):
+        return True
+    amenities = " ".join(property_data.get("short_amenities") or []).lower()
+    return "cocina" in amenities or "kitchen" in amenities
 
 
 def _to_offer(property_data: dict, currency: str, nights: int) -> HotelOffer | None:
