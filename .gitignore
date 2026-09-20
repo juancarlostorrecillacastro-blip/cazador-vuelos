@@ -8,6 +8,9 @@
 __pycache__/
 *.pyc
 
+# Metadatos generados por "pip install -e ."
+*.egg-info/
+
 # Base de datos local (historico de ofertas ya avisadas)
 *.db
 *.sqlite3

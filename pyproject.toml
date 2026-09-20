@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flight-hunter"
+version = "0.1.0"
+description = "Cazador de ofertas de vuelos: busca precios y avisa por Telegram"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["src"]
