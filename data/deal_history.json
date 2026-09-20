@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "BUD",
+    "destination_name": "Buda",
+    "price": 92,
+    "currency": "EUR",
+    "departure_at": "2026-10-14T18:35:00+02:00",
+    "return_at": "2026-10-21T07:50:00+02:00",
+    "airline": "FR",
+    "reason": "Excelente precio para vuelo de larga distancia con una escala.",
+    "flight_link": "https://www.aviasales.com/search/SVQ1410BUD21101",
+    "hotel_name": "Casa Bella Apartments",
+    "hotel_price": 354.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho3982307328/",
+    "total_price": 446.0,
+    "notified_at": "2026-09-20T10:03:17.129351+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "STO",
