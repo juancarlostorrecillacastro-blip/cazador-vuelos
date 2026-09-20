@@ -35,7 +35,7 @@ def check_flight(flight: api_client.FlightPrice, creds: config.Credentials) -> N
         flight.currency,
         flight.airline,
         flight.transfers,
-        creds.anthropic_api_key,
+        creds.gemini_api_key,
     )
     if not is_deal:
         logger.info(

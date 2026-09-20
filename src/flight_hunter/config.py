@@ -13,7 +13,7 @@ class Credentials:
     travelpayouts_token: str
     telegram_bot_token: str
     telegram_chat_id: str
-    anthropic_api_key: str
+    gemini_api_key: str
 
 
 def _require_env(name: str) -> str:
@@ -28,5 +28,5 @@ def load_credentials() -> Credentials:
         travelpayouts_token=_require_env("TRAVELPAYOUTS_TOKEN"),
         telegram_bot_token=_require_env("TELEGRAM_BOT_TOKEN"),
         telegram_chat_id=_require_env("TELEGRAM_CHAT_ID"),
-        anthropic_api_key=_require_env("ANTHROPIC_API_KEY"),
+        gemini_api_key=_require_env("GEMINI_API_KEY"),
     )

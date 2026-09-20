@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/juancarlostorrecillacastro-blip/cazador-vuelos/actions/workflows/tests.yml/badge.svg)](https://github.com/juancarlostorrecillacastro-blip/cazador-vuelos/actions/workflows/tests.yml)
 
-An automation that watches flights from Málaga (AGP) and Sevilla (SVQ) to anywhere in the world, uses Claude to judge whether a price is an actual bargain (not just "cheap"), and pings Telegram when it finds one. A local panel turns the whole thing on and off.
+An automation that watches flights from Málaga (AGP) and Sevilla (SVQ) to anywhere in the world, uses Gemini to judge whether a price is an actual bargain (not just "cheap"), and pings Telegram when it finds one. A local panel turns the whole thing on and off.
 
 Built as a learning project to practice clean separation between business logic, I/O boundaries, and testable code, while shipping something genuinely useful.
 
@@ -11,9 +11,9 @@ Built as a learning project to practice clean separation between business logic,
 Every hour (or on demand), for each origin airport:
 
 1. Fetches the 15 cheapest fares to anywhere in the world, any dates, via the [Travelpayouts Data API](https://www.travelpayouts.com/).
-2. Asks Claude (Anthropic API) to judge each one: is this genuinely a bargain for that route, not just "a cheap-looking number"?
-3. For the ones Claude flags as real deals, checks whether it's cheaper than the last deal already notified for that route — so it won't repeat itself.
-4. Sends a Telegram message with the price, dates, airline and a booking link, plus Claude's one-line reasoning.
+2. Asks Gemini to judge each one: is this genuinely a bargain for that route, not just "a cheap-looking number"?
+3. For the ones Gemini flags as real deals, checks whether it's cheaper than the last deal already notified for that route — so it won't repeat itself.
+4. Sends a Telegram message with the price, dates, airline and a booking link, plus Gemini's one-line reasoning.
 
 Example alert:
 
@@ -42,7 +42,7 @@ Each module has exactly one job, split deliberately into **pure logic** (no netw
 |---|---|---|
 | `config.py` | Loads credentials from `.env` | I/O |
 | `api_client.py` | Fetches the cheapest fares to anywhere from an origin, via Travelpayouts | I/O |
-| `ai_judge.py` | Asks Claude whether a price is a genuine bargain | Pure logic (parsing) + I/O |
+| `ai_judge.py` | Asks Gemini whether a price is a genuine bargain | Pure logic (parsing) + I/O |
 | `deal_finder.py` | Decides if a price is worth a new alert (vs. the last one notified) | Pure logic |
 | `storage.py` | Persists the best price already notified per route (SQLite) | I/O |
 | `notifier.py` | Builds the alert text and sends it via the Telegram Bot API | Pure logic + I/O |
@@ -50,13 +50,13 @@ Each module has exactly one job, split deliberately into **pure logic** (no netw
 | `web.py` | Local Flask on/off panel | I/O |
 | `main.py` | Wires everything together into one run | Orchestration |
 
-This split matters in practice: `deal_finder.py`'s decisions, `notifier.py`'s message formatting, and `ai_judge.py`'s response parsing are covered by fast unit tests with no network calls, while the modules that actually talk to Travelpayouts, Anthropic, Telegram and GitHub were verified by hand against the real services during development.
+This split matters in practice: `deal_finder.py`'s decisions, `notifier.py`'s message formatting, and `ai_judge.py`'s response parsing are covered by fast unit tests with no network calls, while the modules that actually talk to Travelpayouts, Gemini, Telegram and GitHub were verified by hand against the real services during development.
 
 ## Tech stack
 
 - Python 3.12+
 - [Travelpayouts Data API](https://www.travelpayouts.com/) — cheapest fares to anywhere from an airport
-- [Anthropic API](https://console.anthropic.com/) (Claude Haiku) — judges whether a price is a real bargain
+- [Gemini API](https://aistudio.google.com/apikey) (Gemini 2.5 Flash) — judges whether a price is a real bargain
 - Telegram Bot API for notifications
 - SQLite (stdlib `sqlite3`) for the seen-deals history
 - Flask for the local on/off panel
@@ -107,9 +107,9 @@ Sign up at [travelpayouts.com](https://www.travelpayouts.com/), create a project
 
 Message [@BotFather](https://t.me/BotFather) on Telegram, send `/newbot`, and follow the prompts to get a bot token. Then message your new bot once, and visit `https://api.telegram.org/bot<TOKEN>/getUpdates` to find your `chat.id`.
 
-**4. Get an Anthropic API key**
+**4. Get a Gemini API key**
 
-Create one at [console.anthropic.com](https://console.anthropic.com/). Used with the cheapest model (Haiku) for a short yes/no classification, cost is negligible at this volume.
+Create one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). The free tier covers this project's volume with no cost and no card required.
 
 **5. Configure credentials**
 
@@ -117,7 +117,7 @@ Create one at [console.anthropic.com](https://console.anthropic.com/). Used with
 cp .env.example .env
 ```
 
-Fill in `TRAVELPAYOUTS_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and `ANTHROPIC_API_KEY`.
+Fill in `TRAVELPAYOUTS_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and `GEMINI_API_KEY`.
 
 **6. (Optional) Enable the on/off panel**
 
@@ -142,7 +142,7 @@ A GitHub Actions workflow (`.github/workflows/check-deals.yml`) runs the search 
 - `TRAVELPAYOUTS_TOKEN`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
-- `ANTHROPIC_API_KEY`
+- `GEMINI_API_KEY`
 
 Since GitHub Actions runners are ephemeral (no disk survives between runs), the workflow saves and restores `deals.db` via `actions/cache` so the "already notified" history carries over between executions.
 
@@ -153,7 +153,7 @@ The local panel (`python -m flight_hunter.web`) enables/disables this workflow t
 - A price-history dashboard (charts over time per destination)
 - Multiple notification channels (email, Discord)
 - More origin airports, configurable from the panel instead of hardcoded
-- Two-stage filtering (a cheap price-per-km heuristic first, only sending the top candidates to Claude) to reduce API calls
+- Two-stage filtering (a cheap price-per-km heuristic first, only sending the top candidates to Gemini) to reduce API calls
 
 ## License
 
