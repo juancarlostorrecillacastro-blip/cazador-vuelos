@@ -21,9 +21,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: deals.db
-          key: deals-db-${{ github.run_id }}
+          key: deals-db-v2-${{ github.run_id }}
           restore-keys: |
-            deals-db-
+            deals-db-v2-
 
       - name: Instalar dependencias
         run: |
@@ -43,4 +43,4 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: deals.db
-          key: deals-db-${{ github.run_id }}
+          key: deals-db-v2-${{ github.run_id }}
