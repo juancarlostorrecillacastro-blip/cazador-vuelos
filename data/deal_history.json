@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "STO",
+    "destination_name": "Estocolmo",
+    "price": 78,
+    "currency": "EUR",
+    "departure_at": "2026-10-21T21:45:00+02:00",
+    "return_at": "2026-10-27T14:35:00+01:00",
+    "airline": "FR",
+    "reason": "Precio excelente para ruta larga a Estocolmo, incluso con una escala.",
+    "flight_link": "https://www.aviasales.com/search/AGP2110STO27101",
+    "hotel_name": "Biz Apartment Bromma",
+    "hotel_price": 315.0,
+    "hotel_nights": 6,
+    "hotel_link": "https://www.hotels.com/ho2157849696/biz-apartment-bromma-bromma-suecia/",
+    "total_price": 393.0,
+    "notified_at": "2026-09-20T08:02:58.800218+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "BCN",
