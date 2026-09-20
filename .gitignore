@@ -18,10 +18,6 @@ __pycache__/
 *.db
 *.sqlite3
 
-# Configuracion real del usuario (rutas/precios que vigila)
-# se sube solo el .example como plantilla
-config/config.yaml
-
 # Archivos de IDE
 .vscode/
 .idea/
