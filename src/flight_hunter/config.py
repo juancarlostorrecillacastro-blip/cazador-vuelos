@@ -14,6 +14,8 @@ class Credentials:
     telegram_bot_token: str
     telegram_chat_id: str
     gemini_api_key: str
+    rapidapi_key: str
+    rapidapi_host: str
 
 
 def _require_env(name: str) -> str:
@@ -29,4 +31,6 @@ def load_credentials() -> Credentials:
         telegram_bot_token=_require_env("TELEGRAM_BOT_TOKEN"),
         telegram_chat_id=_require_env("TELEGRAM_CHAT_ID"),
         gemini_api_key=_require_env("GEMINI_API_KEY"),
+        rapidapi_key=os.environ.get("RAPIDAPI_KEY", ""),
+        rapidapi_host=os.environ.get("RAPIDAPI_HOST", ""),
     )

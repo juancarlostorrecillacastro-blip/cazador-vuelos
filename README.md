@@ -10,20 +10,28 @@ Built as a learning project to practice clean separation between business logic,
 
 Every hour (or on demand), for each origin airport:
 
-1. Fetches the 15 cheapest fares to anywhere in the world, any dates, via the [Travelpayouts Data API](https://www.travelpayouts.com/).
+1. Fetches the 15 cheapest fares to anywhere in the world, any dates, via the [Travelpayouts Data API](https://www.travelpayouts.com/) — discarding round trips shorter than 4 nights (a same-day round trip is cheap but not a real holiday).
 2. Asks Gemini to judge each one: is this genuinely a bargain for that route, not just "a cheap-looking number"?
 3. For the ones Gemini flags as real deals, checks whether it's cheaper than the last deal already notified for that route — so it won't repeat itself.
-4. Sends a Telegram message with the price, dates, airline and a booking link, plus Gemini's one-line reasoning.
+4. Looks up the cheapest hotel for those exact dates (via a RapidAPI hotel search), and adds its real price to the message — this step is optional and silently skipped if it fails, so a hotel-lookup hiccup never blocks a flight alert.
+5. Sends a nicely formatted Telegram message (bold headers, clickable links, price breakdown) with the flight + hotel total.
 
-Example alert:
+Example alert (rendered with Telegram's HTML formatting):
 
 ```
-Chollo AGP -> STN
-Precio: 27 EUR
-Ida: 12/11/2026 - directo - FR
-Vuelta: 16/11/2026
-Por que: muy por debajo del precio habitual para esta ruta
-https://www.aviasales.com/search/...
+Malaga (AGP) → Ibiza (IBZ)
+
+Vuelo: 45 EUR
+Alojamiento (5 noches): 170 EUR
+Total: 215 EUR
+
+Ida: 10/11/2026 - directo - VY
+Vuelta: 15/11/2026
+
+precio muy por debajo de lo habitual para esta ruta y epoca
+
+Ver vuelo
+Ver Cisne by Nest Hostel
 ```
 
 A local web panel turns the automation on and off:
@@ -45,7 +53,8 @@ Each module has exactly one job, split deliberately into **pure logic** (no netw
 | `ai_judge.py` | Asks Gemini whether a price is a genuine bargain | Pure logic (parsing) + I/O |
 | `deal_finder.py` | Decides if a price is worth a new alert (vs. the last one notified) | Pure logic |
 | `storage.py` | Persists the best price already notified per route (SQLite) | I/O |
-| `notifier.py` | Builds the alert text and sends it via the Telegram Bot API | Pure logic + I/O |
+| `hotel_client.py` | Finds the cheapest hotel for a destination and exact dates, via RapidAPI | Pure logic (parsing/picking) + I/O |
+| `notifier.py` | Builds the HTML alert text (with price breakdown) and sends it via Telegram | Pure logic + I/O |
 | `automation_control.py` | Reads/flips the GitHub Actions schedule on/off | I/O |
 | `web.py` | Local Flask on/off panel | I/O |
 | `main.py` | Wires everything together into one run | Orchestration |
@@ -57,7 +66,8 @@ This split matters in practice: `deal_finder.py`'s decisions, `notifier.py`'s me
 - Python 3.12+
 - [Travelpayouts Data API](https://www.travelpayouts.com/) — cheapest fares to anywhere from an airport
 - [Gemini API](https://aistudio.google.com/apikey) (Gemini 2.5 Flash) — judges whether a price is a real bargain
-- Telegram Bot API for notifications
+- [RapidAPI Hotels Com Provider](https://rapidapi.com/) — cheapest hotel price for the destination and exact dates (optional)
+- Telegram Bot API for notifications, with HTML formatting
 - SQLite (stdlib `sqlite3`) for the seen-deals history
 - Flask for the local on/off panel
 - GitHub Actions for scheduling, controlled remotely via the GitHub REST API
@@ -76,6 +86,7 @@ cazador_vuelos/
 │   ├── ai_judge.py
 │   ├── deal_finder.py
 │   ├── storage.py
+│   ├── hotel_client.py
 │   ├── notifier.py
 │   ├── automation_control.py
 │   ├── web.py
@@ -111,15 +122,19 @@ Message [@BotFather](https://t.me/BotFather) on Telegram, send `/newbot`, and fo
 
 Create one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). The free tier covers this project's volume with no cost and no card required.
 
-**5. Configure credentials**
+**5. (Optional) Get a RapidAPI hotels key**
+
+Sign up at [rapidapi.com](https://rapidapi.com/) (email only, no company), subscribe to the free plan of a hotels-search API such as "Hotels Com Provider", and copy your `X-RapidAPI-Key`. Skip this and leave it blank if you only want flight alerts — the hotel step is silently skipped when the key is missing or the lookup fails.
+
+**6. Configure credentials**
 
 ```bash
 cp .env.example .env
 ```
 
-Fill in `TRAVELPAYOUTS_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and `GEMINI_API_KEY`.
+Fill in `TRAVELPAYOUTS_TOKEN`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `GEMINI_API_KEY` and (optionally) `RAPIDAPI_KEY`.
 
-**6. (Optional) Enable the on/off panel**
+**7. (Optional) Enable the on/off panel**
 
 `GITHUB_TOKEN` and `GITHUB_REPO` in `.env` are only needed to run the local panel (`python -m flight_hunter.web`), never by GitHub Actions itself. Create a [fine-grained personal access token](https://github.com/settings/personal-access-tokens) scoped to just this repo, with **Actions: Read and write** permission — nothing more.
 
@@ -143,6 +158,7 @@ A GitHub Actions workflow (`.github/workflows/check-deals.yml`) runs the search 
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 - `GEMINI_API_KEY`
+- `RAPIDAPI_KEY` (optional — omit it and hotel lookups are skipped)
 
 Since GitHub Actions runners are ephemeral (no disk survives between runs), the workflow saves and restores `deals.db` via `actions/cache` so the "already notified" history carries over between executions.
 

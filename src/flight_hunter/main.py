@@ -2,7 +2,7 @@
 
 import logging
 
-from flight_hunter import ai_judge, api_client, config, deal_finder, notifier, storage
+from flight_hunter import ai_judge, airports, api_client, config, deal_finder, hotel_client, notifier, storage
 
 ORIGINS = ["AGP", "SVQ"]
 CANDIDATES_PER_ORIGIN = 15
@@ -45,13 +45,29 @@ def check_flight(flight: api_client.FlightPrice, is_deal: bool, reason: str, cre
         )
         return
 
-    notifier.send_deal_alert(creds.telegram_bot_token, creds.telegram_chat_id, flight, reason)
+    hotel = find_hotel_for(flight, creds)
+    notifier.send_deal_alert(creds.telegram_bot_token, creds.telegram_chat_id, flight, reason, hotel)
     storage.record_notified_price(
         storage.DEFAULT_DB_PATH, flight.origin, flight.destination, flight.price, flight.currency
     )
     logger.info(
         "Aviso enviado: %s -> %s a %s %s (%s)",
         flight.origin, flight.destination, flight.price, flight.currency, reason,
+    )
+
+
+def find_hotel_for(flight: api_client.FlightPrice, creds: config.Credentials) -> hotel_client.HotelOffer | None:
+    if not creds.rapidapi_key or not flight.return_at:
+        return None
+    destination_name = airports.city_name(flight.destination)
+    return hotel_client.find_cheapest_hotel(
+        destination_name,
+        flight.destination,
+        flight.departure_at[:10],
+        flight.return_at[:10],
+        flight.currency,
+        creds.rapidapi_key,
+        creds.rapidapi_host,
     )
 
 
