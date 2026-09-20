@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 
 CHEAP_DESTINATIONS_URL = "https://api.travelpayouts.com/v1/prices/cheap"
+MIN_TRIP_NIGHTS = 4  # ida y vuelta el mismo dia (o casi) no es un viaje real
 
 
 @dataclass
@@ -42,8 +43,18 @@ def find_cheap_destinations(
         for destination, entries_by_transfers in payload.get("data", {}).items()
         for transfers_str, entry in entries_by_transfers.items()
     ]
+    flights = [flight for flight in flights if has_minimum_trip_length(flight)]
     flights.sort(key=lambda flight: flight.price)
     return flights[:limit]
+
+
+def has_minimum_trip_length(flight: FlightPrice, min_nights: int = MIN_TRIP_NIGHTS) -> bool:
+    """Descarta vuelos de ida y vuelta con menos de min_nights noches entre medias
+    (un vuelo de ida y vuelta el mismo dia es barato pero no es un viaje real)."""
+    if not flight.return_at:
+        return True
+    nights = (datetime.fromisoformat(flight.return_at) - datetime.fromisoformat(flight.departure_at)).days
+    return nights >= min_nights
 
 
 def _to_flight_price(origin: str, destination: str, currency: str, transfers_str: str, entry: dict) -> FlightPrice:
