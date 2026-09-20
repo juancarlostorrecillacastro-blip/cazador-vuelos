@@ -11,6 +11,9 @@ __pycache__/
 # Metadatos generados por "pip install -e ."
 *.egg-info/
 
+# Cache de pytest
+.pytest_cache/
+
 # Base de datos local (historico de ofertas ya avisadas)
 *.db
 *.sqlite3
