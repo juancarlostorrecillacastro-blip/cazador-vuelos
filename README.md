@@ -10,19 +10,22 @@ Built as a learning project to practice clean separation between business logic,
 
 Every hour (or on demand), the program:
 
-1. Checks the cheapest fare for each route you're watching, via the [Travelpayouts Data API](https://www.travelpayouts.com/).
+1. Checks the cheapest fare for each route you're watching (round-trip or one-way, with flexible month-level dates — "cheapest in November", not a fixed day) via the [Travelpayouts Data API](https://www.travelpayouts.com/).
 2. Compares it against the maximum price you configured for that route.
-3. If it's a deal **and** it's cheaper than the last deal it already told you about, sends a Telegram message with the price, date, airline and a booking link.
-4. Remembers the best price it has already notified you about, so re-running it doesn't spam you with the same deal.
+3. If it's a deal **and** it's cheaper than the last deal it already told you about for that route/month, sends a Telegram message with the price, dates, airline and a booking link.
+4. Remembers the best price it has already notified you about per route *and* month combination, so re-running it doesn't spam you with the same deal.
 
 Example alert:
 
 ```
-Oferta MAD -> BCN
-Precio: 32 EUR
-Salida: 24/11/2026 - directo - W4
+Oferta MAD -> LON
+Precio: 44 EUR
+Ida: 05/11/2026 - directo - FR
+Vuelta: 08/11/2026 - directo
 https://www.aviasales.com/search/...
 ```
+
+Routes are managed through a small local web form — no need to hand-edit YAML or memorize IATA airport codes: type a city name, pick departure/return months from a date picker, set a max price, and it's saved.
 
 ## Architecture
 
@@ -33,8 +36,11 @@ Each module has exactly one job, split deliberately into **pure logic** (no netw
 | `config.py` | Loads credentials (`.env`) and watched routes (`config.yaml`) | I/O |
 | `api_client.py` | Fetches the cheapest fare for a route from Travelpayouts | I/O |
 | `deal_finder.py` | Decides if a price counts as a deal, and if it's worth a new alert | Pure logic |
-| `storage.py` | Persists the best price already notified per route (SQLite) | I/O |
+| `storage.py` | Persists the best price already notified per route + month (SQLite) | I/O |
 | `notifier.py` | Builds the alert text and sends it via the Telegram Bot API | Pure logic + I/O |
+| `airports.py` | Loads the bundled city/airport list used by the web form | I/O |
+| `route_manager.py` | Parses form input into a route, reads/writes `config.yaml` | Pure logic + I/O |
+| `web.py` | Local Flask form to add/remove watched routes | I/O |
 | `main.py` | Wires everything together into one run | Orchestration |
 
 This split matters in practice: `deal_finder.py`'s decisions and `notifier.py`'s message formatting are covered by fast unit tests with no network calls, while the modules that actually talk to Travelpayouts and Telegram were verified against the real APIs during development.
@@ -42,9 +48,10 @@ This split matters in practice: `deal_finder.py`'s decisions and `notifier.py`'s
 ## Tech stack
 
 - Python 3.12+
-- [Travelpayouts Data API](https://www.travelpayouts.com/) for fares
+- [Travelpayouts Data API](https://www.travelpayouts.com/) for fares (round-trip, flexible month search)
 - Telegram Bot API for notifications
 - SQLite (stdlib `sqlite3`) for the seen-deals history
+- Flask for the local route-management form
 - GitHub Actions for scheduling (cron + manual trigger), with `actions/cache` to persist the SQLite file between ephemeral runs
 - pytest for the test suite
 
@@ -61,6 +68,11 @@ cazador_vuelos/
 │   ├── deal_finder.py
 │   ├── storage.py
 │   ├── notifier.py
+│   ├── airports.py
+│   ├── route_manager.py
+│   ├── web.py
+│   ├── data/cities.json                # bundled city/airport list for the form
+│   ├── templates/index.html
 │   └── main.py
 ├── tests/
 ├── requirements.txt / requirements-dev.txt
@@ -98,7 +110,13 @@ Fill in `TRAVELPAYOUTS_TOKEN`, `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` (`TRA
 
 **5. Set your routes**
 
-Edit `config/config.yaml` — add as many `origin` / `destination` / `max_price` / `currency` entries as you want.
+Run the local web form:
+
+```bash
+python -m flight_hunter.web
+```
+
+Open `http://127.0.0.1:5000`, type a city name (it autocompletes to the right airport code), pick departure/return months, set a max price, and save. Prefer editing by hand? `config/config.yaml` is plain YAML — see `config/config.example.yaml` for the field reference. Note: saving through the form rewrites the file, so any comments you added by hand will be lost on the next save.
 
 ## Running it
 
@@ -125,10 +143,10 @@ Since GitHub Actions runners are ephemeral (no disk survives between runs), the 
 
 ## Possible improvements
 
-- Round-trip search, not just one-way
-- A lightweight web dashboard showing price history per route
+- A price-history dashboard (charts over time per route), separate from the route-management form
 - Multiple notification channels (email, Discord)
 - Wildcard "cheapest anywhere from X" search instead of fixed routes
+- Preserve comments in `config.yaml` when saving from the web form (would need `ruamel.yaml` instead of plain `PyYAML`)
 
 ## License
 

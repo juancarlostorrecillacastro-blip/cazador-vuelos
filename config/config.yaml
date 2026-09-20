@@ -1,18 +1,13 @@
-# Este archivo tambien se puede editar desde el formulario web:
-#   python -m flight_hunter.web
-# Cada entrada de "routes" es una busqueda independiente que el programa vigilara.
-
 routes:
-  - origin: MAD
-    destination: BCN
-    max_price: 40
-    currency: EUR
-    departure_month: "2026-11"
-    return_month: "2026-11"
-
-  - origin: MAD
-    destination: LIS
-    max_price: 60
-    currency: EUR
-    departure_month: "2026-11"
-    return_month: "2026-11"
+- origin: MAD
+  destination: BCN
+  max_price: 40
+  currency: EUR
+  departure_month: 2026-11
+  return_month: 2026-11
+- origin: MAD
+  destination: LIS
+  max_price: 60
+  currency: EUR
+  departure_month: 2026-11
+  return_month: 2026-11
