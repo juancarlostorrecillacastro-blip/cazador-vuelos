@@ -3,72 +3,49 @@ import pytest
 from flight_hunter import web
 
 
+class _FakeAutomationControl:
+    def __init__(self, initial_state: str):
+        self.state = initial_state
+
+    def get_workflow_state(self, repo, token):
+        return self.state
+
+    def set_workflow_enabled(self, repo, token, enabled):
+        self.state = "active" if enabled else "disabled_manually"
+
+
 @pytest.fixture
-def client(tmp_path, monkeypatch):
-    config_path = tmp_path / "config.yaml"
-    config_path.write_text("routes: []\n", encoding="utf-8")
-    monkeypatch.setattr(web, "CONFIG_PATH", config_path)
+def client(monkeypatch):
+    fake = _FakeAutomationControl("disabled_manually")
+    monkeypatch.setattr(web, "automation_control", fake)
     web.app.config["TESTING"] = True
     with web.app.test_client() as test_client:
-        yield test_client
+        yield test_client, fake
 
 
-def test_index_shows_empty_state(client):
-    response = client.get("/")
-    assert response.status_code == 200
-    assert "Sin rutas vigiladas".encode() in response.data
+def test_index_shows_off_when_workflow_disabled(client):
+    test_client, _ = client
+    response = test_client.get("/")
+    assert b"Apagado" in response.data
 
 
-def test_create_route_adds_it_and_redirects(client):
-    response = client.post(
-        "/routes",
-        data={
-            "origin": "Madrid (MAD)",
-            "destination": "Barcelona (BCN)",
-            "departure_month": "2026-11",
-            "return_month": "",
-            "max_price": "40",
-            "currency": "EUR",
-        },
-        follow_redirects=True,
-    )
-
-    assert response.status_code == 200
-    assert b"MAD" in response.data
-    assert "añadida".encode() in response.data
+def test_index_shows_on_when_workflow_active(client):
+    test_client, fake = client
+    fake.state = "active"
+    response = test_client.get("/")
+    assert "Buscando cada hora".encode() in response.data
 
 
-def test_create_route_with_invalid_city_shows_error(client):
-    response = client.post(
-        "/routes",
-        data={
-            "origin": "Madrid",
-            "destination": "Barcelona (BCN)",
-            "departure_month": "2026-11",
-            "return_month": "",
-            "max_price": "40",
-            "currency": "EUR",
-        },
-        follow_redirects=True,
-    )
-
-    assert response.status_code == 200
-    assert "No se pudo añadir".encode() in response.data
+def test_toggle_turns_it_on(client):
+    test_client, fake = client
+    response = test_client.post("/toggle", follow_redirects=True)
+    assert fake.state == "active"
+    assert "activada".encode() in response.data
 
 
-def test_delete_route(client):
-    client.post(
-        "/routes",
-        data={
-            "origin": "Madrid (MAD)",
-            "destination": "Barcelona (BCN)",
-            "departure_month": "2026-11",
-            "return_month": "",
-            "max_price": "40",
-            "currency": "EUR",
-        },
-    )
-
-    response = client.post("/routes/0/delete", follow_redirects=True)
-
-    assert "Sin rutas vigiladas".encode() in response.data
+def test_toggle_turns_it_off(client):
+    test_client, fake = client
+    fake.state = "active"
+    response = test_client.post("/toggle", follow_redirects=True)
+    assert fake.state == "disabled_manually"
+    assert "desactivada".encode() in response.data

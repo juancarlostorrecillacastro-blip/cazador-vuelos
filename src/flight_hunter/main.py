@@ -1,8 +1,11 @@
-"""Punto de entrada: recorre las rutas configuradas y avisa de ofertas nuevas."""
+"""Punto de entrada: busca chollos desde AGP y SVQ a cualquier destino y avisa por Telegram."""
 
 import logging
 
-from flight_hunter import api_client, config, deal_finder, notifier, storage
+from flight_hunter import ai_judge, api_client, config, deal_finder, notifier, storage
+
+ORIGINS = ["AGP", "SVQ"]
+CANDIDATES_PER_ORIGIN = 15
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -10,56 +13,52 @@ logger = logging.getLogger(__name__)
 
 def run() -> None:
     creds = config.load_credentials()
-    search_config = config.load_search_config()
-    routes = deal_finder.parse_routes(search_config)
-
-    for route in routes:
-        check_route(route, creds)
+    for origin in ORIGINS:
+        check_origin(origin, creds)
 
 
-def check_route(route: deal_finder.RouteWatch, creds: config.Credentials) -> None:
-    flight = api_client.find_cheapest_price(
-        route.origin,
-        route.destination,
-        route.currency,
-        creds.travelpayouts_token,
-        route.departure_month,
-        route.return_month,
+def check_origin(origin: str, creds: config.Credentials) -> None:
+    flights = api_client.find_cheap_destinations(
+        origin, "EUR", creds.travelpayouts_token, limit=CANDIDATES_PER_ORIGIN
     )
+    logger.info("%s: %s candidatos mas baratos encontrados", origin, len(flights))
 
-    if flight is None:
-        logger.info("Sin resultados para %s -> %s", route.origin, route.destination)
-        return
+    for flight in flights:
+        check_flight(flight, creds)
 
-    if not deal_finder.is_a_deal(flight, route):
+
+def check_flight(flight: api_client.FlightPrice, creds: config.Credentials) -> None:
+    is_deal, reason = ai_judge.is_good_deal(
+        flight.origin,
+        flight.destination,
+        flight.price,
+        flight.currency,
+        flight.airline,
+        flight.transfers,
+        creds.anthropic_api_key,
+    )
+    if not is_deal:
         logger.info(
-            "%s -> %s: %s %s no es oferta (maximo %s)",
-            route.origin, route.destination, flight.price, flight.currency, route.max_price,
+            "%s -> %s: %s %s descartado (%s)",
+            flight.origin, flight.destination, flight.price, flight.currency, reason,
         )
         return
 
-    previous_best = storage.get_best_notified_price(
-        storage.DEFAULT_DB_PATH, route.origin, route.destination, route.departure_month, route.return_month
-    )
+    previous_best = storage.get_best_notified_price(storage.DEFAULT_DB_PATH, flight.origin, flight.destination)
     if not deal_finder.is_new_best_price(flight.price, previous_best):
         logger.info(
             "%s -> %s: %s %s ya se aviso antes, se omite",
-            route.origin, route.destination, flight.price, flight.currency,
+            flight.origin, flight.destination, flight.price, flight.currency,
         )
         return
 
-    notifier.send_deal_alert(creds.telegram_bot_token, creds.telegram_chat_id, flight)
+    notifier.send_deal_alert(creds.telegram_bot_token, creds.telegram_chat_id, flight, reason)
     storage.record_notified_price(
-        storage.DEFAULT_DB_PATH,
-        route.origin,
-        route.destination,
-        route.departure_month,
-        route.return_month,
-        flight.price,
-        flight.currency,
+        storage.DEFAULT_DB_PATH, flight.origin, flight.destination, flight.price, flight.currency
     )
     logger.info(
-        "Aviso enviado: %s -> %s a %s %s", route.origin, route.destination, flight.price, flight.currency
+        "Aviso enviado: %s -> %s a %s %s (%s)",
+        flight.origin, flight.destination, flight.price, flight.currency, reason,
     )
 
 

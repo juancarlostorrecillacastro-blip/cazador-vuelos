@@ -1,10 +1,11 @@
-"""Cliente para la Data API de Travelpayouts: consulta precios de vuelos."""
+"""Cliente para la Data API de Travelpayouts: precios mas baratos a cualquier destino."""
 
 from dataclasses import dataclass
+from datetime import datetime
 
 import requests
 
-PRICES_FOR_DATES_URL = "https://api.travelpayouts.com/aviasales/v3/prices_for_dates"
+CHEAP_DESTINATIONS_URL = "https://api.travelpayouts.com/v1/prices/cheap"
 
 
 @dataclass
@@ -17,57 +18,51 @@ class FlightPrice:
     return_at: str | None
     airline: str
     transfers: int
-    return_transfers: int | None
     booking_link: str
 
 
-def find_cheapest_price(
-    origin: str,
-    destination: str,
-    currency: str,
-    token: str,
-    departure_month: str,
-    return_month: str | None = None,
-) -> FlightPrice | None:
-    """Devuelve el vuelo mas barato del mes indicado, o None si no hay resultados.
-
-    departure_month y return_month usan formato "YYYY-MM": la API busca el precio
-    mas barato en todo ese mes, no en una fecha exacta. Si return_month se omite,
-    la busqueda es solo de ida.
-    """
-    params = {
-        "origin": origin,
-        "destination": destination,
-        "currency": currency,
-        "token": token,
-        "departure_at": departure_month,
-        "sorting": "price",
-        "limit": 1,
-    }
-    if return_month:
-        params["return_at"] = return_month
-        params["one_way"] = "false"
-    else:
-        params["one_way"] = "true"
-
-    response = requests.get(PRICES_FOR_DATES_URL, params=params, timeout=10)
+def find_cheap_destinations(
+    origin: str, currency: str, token: str, limit: int = 15
+) -> list[FlightPrice]:
+    """Devuelve los `limit` vuelos mas baratos desde origin a cualquier destino,
+    sin restriccion de fecha (la API busca en todo lo que tiene cacheado)."""
+    response = requests.get(
+        CHEAP_DESTINATIONS_URL,
+        params={"origin": origin, "currency": currency, "token": token},
+        timeout=15,
+    )
     response.raise_for_status()
     payload = response.json()
 
-    if not payload.get("success") or not payload.get("data"):
-        return None
+    if not payload.get("success"):
+        return []
 
-    cheapest = payload["data"][0]
+    flights = [
+        _to_flight_price(origin, destination, currency, transfers_str, entry)
+        for destination, entries_by_transfers in payload.get("data", {}).items()
+        for transfers_str, entry in entries_by_transfers.items()
+    ]
+    flights.sort(key=lambda flight: flight.price)
+    return flights[:limit]
 
+
+def _to_flight_price(origin: str, destination: str, currency: str, transfers_str: str, entry: dict) -> FlightPrice:
     return FlightPrice(
         origin=origin,
         destination=destination,
-        price=cheapest["price"],
+        price=entry["price"],
         currency=currency,
-        departure_at=cheapest["departure_at"],
-        return_at=cheapest.get("return_at"),
-        airline=cheapest["airline"],
-        transfers=cheapest["transfers"],
-        return_transfers=cheapest.get("return_transfers"),
-        booking_link="https://www.aviasales.com" + cheapest["link"],
+        departure_at=entry["departure_at"],
+        return_at=entry.get("return_at"),
+        airline=entry["airline"],
+        transfers=int(transfers_str),
+        booking_link=_search_link(origin, destination, entry["departure_at"], entry.get("return_at")),
     )
+
+
+def _search_link(origin: str, destination: str, departure_at: str, return_at: str | None) -> str:
+    departure_part = datetime.fromisoformat(departure_at).strftime("%d%m")
+    if return_at:
+        return_part = datetime.fromisoformat(return_at).strftime("%d%m")
+        return f"https://www.aviasales.com/search/{origin}{departure_part}{destination}{return_part}1"
+    return f"https://www.aviasales.com/search/{origin}{departure_part}{destination}1"

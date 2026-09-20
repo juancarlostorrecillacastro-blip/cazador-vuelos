@@ -1,54 +1,33 @@
-"""Formulario web local para gestionar las rutas vigiladas, sin editar YAML a mano."""
+"""Panel local: enciende o apaga la busqueda automatica en GitHub Actions."""
 
-from pathlib import Path
+import os
 
-from flask import Flask, flash, redirect, render_template, request, url_for
+from dotenv import load_dotenv
+from flask import Flask, flash, redirect, render_template, url_for
 
-from flight_hunter import airports, route_manager
+from flight_hunter import automation_control
 
-CONFIG_PATH = Path(__file__).resolve().parent.parent.parent / "config" / "config.yaml"
+load_dotenv()
+
+GITHUB_REPO = os.environ.get("GITHUB_REPO", "")
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 
 app = Flask(__name__)
-app.secret_key = "cazador-vuelos-local"  # solo protege mensajes flash en un servidor local
+app.secret_key = "cazador-vuelos-local"
 
 
 @app.route("/")
 def index():
-    routes = route_manager.load_routes(CONFIG_PATH)
-    cities = airports.load_cities()
-    return render_template("index.html", routes=routes, cities=cities)
+    state = automation_control.get_workflow_state(GITHUB_REPO, GITHUB_TOKEN)
+    return render_template("index.html", is_active=(state == "active"))
 
 
-@app.route("/routes", methods=["POST"])
-def create_route():
-    try:
-        origin = route_manager.extract_iata_code(request.form["origin"])
-        destination = route_manager.extract_iata_code(request.form["destination"])
-        departure_month = route_manager.validate_month(request.form["departure_month"])
-        return_month_raw = request.form.get("return_month") or ""
-
-        route = {
-            "origin": origin,
-            "destination": destination,
-            "max_price": float(request.form["max_price"]),
-            "currency": request.form["currency"],
-            "departure_month": departure_month,
-        }
-        if return_month_raw:
-            route["return_month"] = route_manager.validate_month(return_month_raw)
-
-        route_manager.add_route(CONFIG_PATH, route)
-        flash(f"Ruta {origin} -> {destination} añadida.")
-    except ValueError as error:
-        flash(f"No se pudo añadir la ruta: {error}")
-
-    return redirect(url_for("index"))
-
-
-@app.route("/routes/<int:index>/delete", methods=["POST"])
-def delete_route(index: int):
-    route_manager.remove_route(CONFIG_PATH, index)
-    flash("Ruta eliminada.")
+@app.route("/toggle", methods=["POST"])
+def toggle():
+    state = automation_control.get_workflow_state(GITHUB_REPO, GITHUB_TOKEN)
+    turning_on = state != "active"
+    automation_control.set_workflow_enabled(GITHUB_REPO, GITHUB_TOKEN, enabled=turning_on)
+    flash("Busqueda activada." if turning_on else "Busqueda desactivada.")
     return redirect(url_for("index"))
 
 
