@@ -1,11 +1,11 @@
-"""Panel local: enciende o apaga la busqueda automatica en GitHub Actions."""
+"""Panel local: enciende/apaga la busqueda automatica y muestra el historial de chollos."""
 
 import os
 
 from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, url_for
 
-from flight_hunter import automation_control
+from flight_hunter import automation_control, history
 
 load_dotenv()
 
@@ -29,6 +29,12 @@ def toggle():
     automation_control.set_workflow_enabled(GITHUB_REPO, GITHUB_TOKEN, enabled=turning_on)
     flash("Busqueda activada." if turning_on else "Busqueda desactivada.")
     return redirect(url_for("index"))
+
+
+@app.route("/historial")
+def historial():
+    entries = history.fetch_remote_history(GITHUB_REPO)
+    return render_template("history.html", entries=entries)
 
 
 if __name__ == "__main__":

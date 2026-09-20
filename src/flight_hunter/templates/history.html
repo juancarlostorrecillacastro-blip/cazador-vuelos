@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Historial de chollos</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; }
+        h1 { margin-bottom: 4px; }
+        .subtitle { color: #666; margin-top: 0; margin-bottom: 32px; }
+        .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .card h2 { margin: 0 0 8px 0; font-size: 18px; }
+        .price { font-weight: bold; }
+        .reason { color: #555; font-style: italic; margin: 8px 0; }
+        .meta { color: #888; font-size: 13px; margin-bottom: 8px; }
+        .links a { margin-right: 16px; color: #06c; text-decoration: none; font-size: 14px; }
+        .empty { color: #888; }
+        nav { margin-bottom: 24px; }
+        nav a { color: #06c; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <nav><a href="{{ url_for('index') }}">&larr; Volver al panel</a></nav>
+
+    <h1>Historial de chollos</h1>
+    <p class="subtitle">Los ultimos {{ entries|length }} chollos encontrados (los mas recientes primero)</p>
+
+    {% for entry in entries %}
+    <div class="card">
+        <h2>{{ entry.origin_name }} ({{ entry.origin }}) &rarr; {{ entry.destination_name }} ({{ entry.destination }})</h2>
+        <div class="meta">{{ entry.notified_at[:16] | replace("T", " ") }}</div>
+
+        {% if entry.total_price %}
+            <div>Vuelo: {{ "%.0f"|format(entry.price) }} {{ entry.currency }}</div>
+            <div>Alojamiento ({{ entry.hotel_nights }} noches): {{ "%.0f"|format(entry.hotel_price) }} {{ entry.currency }} &mdash; {{ entry.hotel_name }}</div>
+            <div class="price">Total: {{ "%.0f"|format(entry.total_price) }} {{ entry.currency }}</div>
+        {% else %}
+            <div class="price">Precio: {{ "%.0f"|format(entry.price) }} {{ entry.currency }}</div>
+        {% endif %}
+
+        {% if entry.reason %}<p class="reason">{{ entry.reason }}</p>{% endif %}
+
+        <div class="links">
+            <a href="{{ entry.flight_link }}">Ver vuelo</a>
+            {% if entry.hotel_link %}<a href="{{ entry.hotel_link }}">Ver alojamiento</a>{% endif %}
+        </div>
+    </div>
+    {% else %}
+    <p class="empty">Todavia no hay chollos en el historial.</p>
+    {% endfor %}
+</body>
+</html>

@@ -15,6 +15,8 @@
         button.off { background: #1a7f37; }
         .flash { background: #eef7ee; border: 1px solid #b6dfb6; padding: 8px 12px; border-radius: 4px; margin-bottom: 24px; }
         .info { margin-top: 40px; font-size: 13px; color: #888; }
+        nav { margin-top: 32px; }
+        nav a { color: #06c; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -42,5 +44,7 @@
     {% endif %}
 
     <p class="info">El cambio se aplica en GitHub Actions al instante, pero la proxima busqueda real ocurre en la siguiente hora en punto (o al lanzarla a mano desde la pestaña Actions).</p>
+
+    <nav><a href="{{ url_for('historial') }}">Ver historial de chollos &rarr;</a></nav>
 </body>
 </html>

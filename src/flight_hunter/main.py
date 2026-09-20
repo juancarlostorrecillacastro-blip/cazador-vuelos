@@ -2,7 +2,17 @@
 
 import logging
 
-from flight_hunter import ai_judge, airports, api_client, config, deal_finder, hotel_client, notifier, storage
+from flight_hunter import (
+    ai_judge,
+    airports,
+    api_client,
+    config,
+    deal_finder,
+    history,
+    hotel_client,
+    notifier,
+    storage,
+)
 
 ORIGINS = ["AGP", "SVQ"]
 CANDIDATES_PER_ORIGIN = 15
@@ -50,6 +60,7 @@ def check_flight(flight: api_client.FlightPrice, is_deal: bool, reason: str, cre
     storage.record_notified_price(
         storage.DEFAULT_DB_PATH, flight.origin, flight.destination, flight.price, flight.currency
     )
+    history.record_deal(history.DEFAULT_HISTORY_PATH, build_history_entry(flight, reason, hotel))
     logger.info(
         "Aviso enviado: %s -> %s a %s %s (%s)",
         flight.origin, flight.destination, flight.price, flight.currency, reason,
@@ -69,6 +80,32 @@ def find_hotel_for(flight: api_client.FlightPrice, creds: config.Credentials) ->
         creds.rapidapi_key,
         creds.rapidapi_host,
     )
+
+
+def build_history_entry(
+    flight: api_client.FlightPrice, reason: str, hotel: hotel_client.HotelOffer | None
+) -> dict:
+    """Convierte un chollo avisado en el registro que se guarda en el historial."""
+    entry = {
+        "origin": flight.origin,
+        "origin_name": airports.city_name(flight.origin),
+        "destination": flight.destination,
+        "destination_name": airports.city_name(flight.destination),
+        "price": flight.price,
+        "currency": flight.currency,
+        "departure_at": flight.departure_at,
+        "return_at": flight.return_at,
+        "airline": flight.airline,
+        "reason": reason,
+        "flight_link": flight.booking_link,
+    }
+    if hotel:
+        entry["hotel_name"] = hotel.name
+        entry["hotel_price"] = hotel.total_price
+        entry["hotel_nights"] = hotel.nights
+        entry["hotel_link"] = hotel.link
+        entry["total_price"] = flight.price + hotel.total_price
+    return entry
 
 
 if __name__ == "__main__":

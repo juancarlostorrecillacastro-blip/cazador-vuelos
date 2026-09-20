@@ -5,6 +5,9 @@ on:
     - cron: "0 * * * *"
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   check-deals:
     runs-on: ubuntu-latest
@@ -46,3 +49,14 @@ jobs:
         with:
           path: deals.db
           key: deals-db-v3-${{ github.run_id }}
+
+      - name: Subir el historial de chollos al repo
+        if: always()
+        run: |
+          if [ -f data/deal_history.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add data/deal_history.json
+            git diff --staged --quiet || git commit -m "Actualiza historial de chollos [skip ci]"
+            git push
+          fi
