@@ -1,5 +1,5 @@
 from flight_hunter.api_client import FlightPrice
-from flight_hunter.deal_finder import RouteWatch, is_a_deal, parse_routes
+from flight_hunter.deal_finder import RouteWatch, is_a_deal, is_new_best_price, parse_routes
 
 
 def _flight(price: float) -> FlightPrice:
@@ -28,6 +28,19 @@ def test_price_equal_to_max_is_a_deal():
 def test_price_above_max_is_not_a_deal():
     route = RouteWatch(origin="MAD", destination="BCN", max_price=40, currency="EUR")
     assert is_a_deal(_flight(55), route) is False
+
+
+def test_is_new_best_price_when_no_previous_record():
+    assert is_new_best_price(32, None) is True
+
+
+def test_is_new_best_price_when_price_dropped():
+    assert is_new_best_price(25, 32) is True
+
+
+def test_is_new_best_price_when_price_did_not_improve():
+    assert is_new_best_price(32, 32) is False
+    assert is_new_best_price(40, 32) is False
 
 
 def test_parse_routes_builds_route_watch_objects():

@@ -29,3 +29,8 @@ def parse_routes(search_config: dict) -> list[RouteWatch]:
 def is_a_deal(flight: FlightPrice, route: RouteWatch) -> bool:
     """Un precio es oferta si es igual o menor al maximo configurado para esa ruta."""
     return flight.price <= route.max_price
+
+
+def is_new_best_price(price: float, previous_best: float | None) -> bool:
+    """Solo merece un aviso nuevo si no habia aviso previo, o si el precio bajo aun mas."""
+    return previous_best is None or price < previous_best
