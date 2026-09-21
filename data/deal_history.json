@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "LIS",
+    "destination_name": "Lisboa",
+    "price": 50,
+    "currency": "EUR",
+    "departure_at": "2026-11-09T21:25:00+01:00",
+    "return_at": "2026-11-14T21:10:00Z",
+    "airline": "FR",
+    "reason": "Excelente precio para vuelo directo internacional corto. Muy competitivo.",
+    "flight_link": "https://www.aviasales.com/search/SVQ0911LIS14111",
+    "hotel_name": "Lovely room ",
+    "hotel_price": 265.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho2875563584/lovely-room-lisboa-portugal/",
+    "total_price": 315.0,
+    "notified_at": "2026-09-21T01:03:55.466718+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "VIE",
