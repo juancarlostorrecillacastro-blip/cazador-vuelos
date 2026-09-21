@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "LYS",
+    "destination_name": "Lyon",
+    "price": 65,
+    "currency": "EUR",
+    "departure_at": "2026-10-23T22:55:00+02:00",
+    "return_at": "2026-11-15T08:10:00+01:00",
+    "airline": "V7",
+    "reason": "Muy buen precio para un vuelo directo de ida y vuelta a Lyon.",
+    "flight_link": "https://www.aviasales.com/search/AGP2310LYS15111",
+    "hotel_name": "Residhotel Lyon Lamartine",
+    "hotel_price": 1150.0,
+    "hotel_nights": 23,
+    "hotel_link": "https://www.hotels.com/ho274045/residhotel-lyon-lamartine-tassin-la-demi-lune-francia/",
+    "total_price": 1215.0,
+    "notified_at": "2026-09-21T14:02:56.863165+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "BUH",
