@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "KSC",
+    "destination_name": "Košice",
+    "price": 49,
+    "currency": "EUR",
+    "departure_at": "2026-11-15T06:10:00+01:00",
+    "return_at": "2026-11-19T11:35:00+01:00",
+    "airline": "FR",
+    "reason": "Precio increíble para vuelo directo de larga distancia a Europa del Este.",
+    "flight_link": "https://www.aviasales.com/search/AGP1511KSC19111",
+    "hotel_name": "Apartmány Belveder",
+    "hotel_price": 138.0,
+    "hotel_nights": 4,
+    "hotel_link": "https://www.hotels.com/ho557933/apartmany-belveder-vysoke-tatry-eslovaquia/",
+    "total_price": 187.0,
+    "notified_at": "2026-09-22T01:02:48.336478+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "TCI",
