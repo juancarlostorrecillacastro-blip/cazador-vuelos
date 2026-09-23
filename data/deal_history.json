@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "WAW",
+    "destination_name": "Varsovia",
+    "price": 108,
+    "currency": "EUR",
+    "departure_at": "2027-02-17T10:15:00+01:00",
+    "return_at": "2027-02-21T14:00:00+01:00",
+    "airline": "EC",
+    "reason": "Excelente precio para vuelo largo a Europa del Este, incluso con escala.",
+    "flight_link": "https://www.aviasales.com/search/SVQ1702WAW21021",
+    "hotel_name": "ShortStayPoland Kazimierza Wielkiego",
+    "hotel_price": 150.0,
+    "hotel_nights": 4,
+    "hotel_link": "https://www.hotels.com/ho3466955424/shortstaypoland-kazimierza-wielkiego/",
+    "total_price": 258.0,
+    "notified_at": "2026-09-23T09:03:12.714490+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "DUB",
