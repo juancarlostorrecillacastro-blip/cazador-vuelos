@@ -1,5 +1,33 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "GOT",
+    "destination_name": "Gotemburgo",
+    "price": 79,
+    "currency": "EUR",
+    "departure_at": "2026-11-13T07:05:00+01:00",
+    "return_at": "2026-11-20T11:20:00+01:00",
+    "airline": "FR",
+    "reason": "Precio excepcional para Suecia, ruta larga y directa. Muy difícil de superar.",
+    "flight_link": "https://www.aviasales.com/search/AGP1311GOT20111",
+    "notified_at": "2026-09-23T16:03:36.728453+00:00"
+  },
+  {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "KSC",
+    "destination_name": "Košice",
+    "price": 39,
+    "currency": "EUR",
+    "departure_at": "2026-11-15T06:10:00+01:00",
+    "return_at": "2026-11-19T11:35:00+01:00",
+    "airline": "FR",
+    "reason": "Precio increíble para destino de Europa del Este. Muy raro ver tan bajo.",
+    "flight_link": "https://www.aviasales.com/search/AGP1511KSC19111",
+    "notified_at": "2026-09-23T16:03:21.092623+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "WAW",
