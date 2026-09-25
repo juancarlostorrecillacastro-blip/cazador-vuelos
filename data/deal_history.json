@@ -2,6 +2,20 @@
   {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
+    "destination": "BRS",
+    "destination_name": "Bristol",
+    "price": 64,
+    "currency": "EUR",
+    "departure_at": "2026-12-19T10:55:00+01:00",
+    "return_at": "2026-12-26T06:35:00Z",
+    "airline": "U2",
+    "reason": "Excelente precio para vuelo directo al Reino Unido, muy competitivo.",
+    "flight_link": "https://www.aviasales.com/search/SVQ1912BRS26121",
+    "notified_at": "2026-09-25T10:44:54.349654+00:00"
+  },
+  {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
     "destination": "VLC",
     "destination_name": "Valencia",
     "price": 38,
