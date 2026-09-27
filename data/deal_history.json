@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "DUS",
+    "destination_name": "Düsseldorf",
+    "price": 68,
+    "currency": "EUR",
+    "departure_at": "2026-11-27T09:45:00+01:00",
+    "return_at": "2026-12-05T12:10:00+01:00",
+    "airline": "FR",
+    "reason": "Muy buen precio para un vuelo directo a Alemania, por debajo de lo habitual.",
+    "flight_link": "https://www.aviasales.com/search/AGP2711DUS05121",
+    "hotel_name": "JustStay Mülheim/Oberhausen Hotel & Apartments",
+    "hotel_price": 499.0,
+    "hotel_nights": 8,
+    "hotel_link": "https://www.hotels.com/ho2847133440/juststay-mulheim-mulheim-an-der-ruhr-alemania/",
+    "total_price": 567.0,
+    "notified_at": "2026-09-27T22:39:00.639301+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "STO",
