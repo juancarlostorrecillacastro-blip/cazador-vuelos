@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "CPH",
+    "destination_name": "Copenhague",
+    "price": 70,
+    "currency": "EUR",
+    "departure_at": "2026-11-20T06:25:00+01:00",
+    "return_at": "2026-11-27T06:10:00+01:00",
+    "airline": "D8",
+    "reason": "Precio muy fuerte para ruta escandinava con Norwegian, excelente.",
+    "flight_link": "https://www.aviasales.com/search/AGP2011CPH27111",
+    "hotel_name": "4 Person Holiday Home in Skibby",
+    "hotel_price": 242.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho1909279360/4-person-holiday-home-in-skibby-skibby-dinamarca/",
+    "total_price": 312.0,
+    "notified_at": "2026-09-28T16:11:30.897134+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "ATH",
