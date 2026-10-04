@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "GVA",
+    "destination_name": "Ginebra",
+    "price": 49,
+    "currency": "EUR",
+    "departure_at": "2026-12-10T15:45:00+01:00",
+    "return_at": "2026-12-15T08:10:00+01:00",
+    "airline": "U2",
+    "reason": "Excelente precio para Suiza, directo y por debajo de la media.",
+    "flight_link": "https://www.aviasales.com/search/AGP1012GVA15121",
+    "hotel_name": "Appart'City Classic Thonon les bains",
+    "hotel_price": 245.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho278611/appart-city-thonon-les-bains-thonon-les-bains-francia/",
+    "total_price": 294.0,
+    "notified_at": "2026-10-04T00:12:44.747426+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "WAW",
