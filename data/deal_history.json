@@ -1,5 +1,38 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "ROM",
+    "destination_name": "Roma",
+    "price": 52,
+    "currency": "EUR",
+    "departure_at": "2026-10-21T22:20:00+02:00",
+    "return_at": "2026-10-26T06:40:00+01:00",
+    "airline": "W4",
+    "reason": "Chollo absoluto para capital europea tan demandada, precio excepcional y directo.",
+    "flight_link": "https://www.aviasales.com/search/AGP2110ROM26101",
+    "hotel_name": "Fabulous Village",
+    "hotel_price": 350.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho369920/fabulous-village-roma-italia/",
+    "total_price": 402.0,
+    "notified_at": "2026-10-05T18:56:50.792717+00:00"
+  },
+  {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "BIO",
+    "destination_name": "Ciudad de Bilbao",
+    "price": 41,
+    "currency": "EUR",
+    "departure_at": "2026-12-27T05:50:00+01:00",
+    "return_at": "2026-12-31T21:20:00+01:00",
+    "airline": "VY",
+    "reason": "Precio excepcional para vuelo doméstico directo, muy difícil de encontrar más barato.",
+    "flight_link": "https://www.aviasales.com/search/AGP2712BIO31121",
+    "notified_at": "2026-10-05T18:56:39.923983+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "ROM",
