@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "ROM",
+    "destination_name": "Roma",
+    "price": 43,
+    "currency": "EUR",
+    "departure_at": "2026-11-25T22:05:00+01:00",
+    "return_at": "2026-12-02T08:00:00+01:00",
+    "airline": "W4",
+    "reason": "Precio excepcional para vuelo internacional directo a capital europea. Un chollo.",
+    "flight_link": "https://www.aviasales.com/search/SVQ2511ROM02121",
+    "hotel_name": "Fabulous Village",
+    "hotel_price": 330.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho369920/fabulous-village-roma-italia/",
+    "total_price": 373.0,
+    "notified_at": "2026-10-06T13:56:12.471909+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "ROM",
