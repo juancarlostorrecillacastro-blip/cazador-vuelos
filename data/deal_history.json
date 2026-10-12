@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "IBZ",
+    "destination_name": "Ibiza",
+    "price": 29,
+    "currency": "EUR",
+    "departure_at": "2026-10-16T05:55:00+02:00",
+    "return_at": "2026-10-20T23:20:00+02:00",
+    "airline": "FR",
+    "reason": "Precio excepcional para ruta popular y corta. Muy por debajo de lo habitual.",
+    "flight_link": "https://www.aviasales.com/search/AGP1610IBZ20101",
+    "hotel_name": "es grop apartamentos",
+    "hotel_price": 225.0,
+    "hotel_nights": 4,
+    "hotel_link": "https://www.hotels.com/ho4361507392/es-grop-apartamentos/",
+    "total_price": 254.0,
+    "notified_at": "2026-10-12T23:19:26.471986+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "MAN",
