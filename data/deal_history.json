@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "MAN",
+    "destination_name": "Mánchester",
+    "price": 121,
+    "currency": "EUR",
+    "departure_at": "2026-12-04T22:15:00+01:00",
+    "return_at": "2026-12-09T17:00:00Z",
+    "airline": "FR",
+    "reason": "Excelente precio para un vuelo directo al Reino Unido, muy competitivo.",
+    "flight_link": "https://www.aviasales.com/search/SVQ0412MAN09121",
+    "hotel_name": "The Studio",
+    "hotel_price": 241.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho993009856/the-studio-hope-valley-reino-unido/",
+    "total_price": 362.0,
+    "notified_at": "2026-10-12T16:15:18.336800+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "BIO",
