@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "FEZ",
+    "destination_name": "Fez",
+    "price": 33,
+    "currency": "EUR",
+    "departure_at": "2026-10-20T15:30:00+02:00",
+    "return_at": "2026-10-25T16:35:00+01:00",
+    "airline": "FR",
+    "reason": "Precio muy bajo para ruta directa a Fes, a menudo más caro.",
+    "flight_link": "https://www.aviasales.com/search/AGP2010FEZ25101",
+    "hotel_name": "Appartement calme",
+    "hotel_price": 165.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho2979687328/appartement-calme-fez-marruecos/",
+    "total_price": 198.0,
+    "notified_at": "2026-10-14T14:08:08.309727+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "BIO",
