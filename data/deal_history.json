@@ -1,5 +1,19 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "TRS",
+    "destination_name": "Trieste",
+    "price": 32,
+    "currency": "EUR",
+    "departure_at": "2026-11-19T09:00:00+01:00",
+    "return_at": "2026-11-23T19:20:00+01:00",
+    "airline": "FR",
+    "reason": "Precio excepcional para vuelo directo a Italia, muy por debajo de lo habitual.",
+    "flight_link": "https://www.aviasales.com/search/AGP1911TRS23111",
+    "notified_at": "2026-10-18T18:20:29.145057+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "OPO",
