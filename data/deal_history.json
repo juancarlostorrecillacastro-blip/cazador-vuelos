@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "OPO",
+    "destination_name": "Oporto",
+    "price": 65,
+    "currency": "EUR",
+    "departure_at": "2026-12-28T22:40:00+01:00",
+    "return_at": "2027-01-05T07:35:00Z",
+    "airline": "FR",
+    "reason": "Muy buen precio para vuelo directo internacional de corta distancia.",
+    "flight_link": "https://www.aviasales.com/search/SVQ2812OPO05011",
+    "hotel_name": "Bonfim 234 Townhouse",
+    "hotel_price": 567.0,
+    "hotel_nights": 8,
+    "hotel_link": "https://www.hotels.com/ho613007744/bonfim-234-townhouse-oporto-portugal/",
+    "total_price": 632.0,
+    "notified_at": "2026-10-18T11:51:58.628838+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "STO",
