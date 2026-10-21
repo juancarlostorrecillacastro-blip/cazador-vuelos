@@ -1,5 +1,38 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "MAD",
+    "destination_name": "Ciudad de Madrid",
+    "price": 66,
+    "currency": "EUR",
+    "departure_at": "2026-11-14T17:05:00+01:00",
+    "return_at": "2026-11-19T06:30:00+01:00",
+    "airline": "UX",
+    "reason": "Precio excepcional para aerolínea tradicional en ruta nacional de alta demanda.",
+    "flight_link": "https://www.aviasales.com/search/AGP1411MAD19111",
+    "notified_at": "2026-10-21T23:54:10.284490+00:00"
+  },
+  {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "GDN",
+    "destination_name": "Danzig",
+    "price": 66,
+    "currency": "EUR",
+    "departure_at": "2026-12-10T18:35:00+01:00",
+    "return_at": "2026-12-15T15:05:00+01:00",
+    "airline": "FR",
+    "reason": "Excelente precio para un vuelo directo de larga distancia a Polonia.",
+    "flight_link": "https://www.aviasales.com/search/AGP1012GDN15121",
+    "hotel_name": "Folks Village Plowce House",
+    "hotel_price": 197.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho924651680/folks-village-plowce-house-gdansk-polonia/",
+    "total_price": 263.0,
+    "notified_at": "2026-10-21T23:53:54.652941+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "ACE",
