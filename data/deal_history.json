@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "PAR",
+    "destination_name": "París",
+    "price": 67,
+    "currency": "EUR",
+    "departure_at": "2026-12-18T19:55:00+01:00",
+    "return_at": "2027-01-03T08:30:00+01:00",
+    "airline": "VY",
+    "reason": "Muy buen precio para una capital europea importante con Vueling.",
+    "flight_link": "https://www.aviasales.com/search/AGP1812PAR03011",
+    "hotel_name": "Citadines Montmartre Paris",
+    "hotel_price": 2452.0,
+    "hotel_nights": 16,
+    "hotel_link": "https://www.hotels.com/ho206330/citadines-montmartre-paris-paris-francia/",
+    "total_price": 2519.0,
+    "notified_at": "2026-10-25T00:39:11.591199+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "VLC",
