@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "EAP",
+    "destination_name": "Basilea",
+    "price": 102,
+    "currency": "EUR",
+    "departure_at": "2026-11-20T06:35:00+01:00",
+    "return_at": "2026-11-25T06:15:00+01:00",
+    "airline": "FR",
+    "reason": "Precio muy bueno para vuelo con escala a Alemania.",
+    "flight_link": "https://www.aviasales.com/search/SVQ2011EAP25111",
+    "hotel_name": "Aparthotel Tannenhof",
+    "hotel_price": 260.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho3476115840/apartment-am-tannenweg/",
+    "total_price": 362.0,
+    "notified_at": "2026-10-26T17:48:31.001605+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "RAK",
