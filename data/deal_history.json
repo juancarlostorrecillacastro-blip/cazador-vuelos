@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "EIN",
+    "destination_name": "Eindhoven",
+    "price": 69,
+    "currency": "EUR",
+    "departure_at": "2026-12-26T05:55:00+01:00",
+    "return_at": "2027-01-01T11:55:00+01:00",
+    "airline": "FR",
+    "reason": "Precio muy bueno para Países Bajos, generalmente más caros. Es un chollo.",
+    "flight_link": "https://www.aviasales.com/search/AGP2612EIN01011",
+    "hotel_name": "Comfy Bungalow near Bosland Nature Reserve",
+    "hotel_price": 783.0,
+    "hotel_nights": 6,
+    "hotel_link": "https://www.hotels.com/ho2115913344/comfy-bungalow-near-bosland-nature-reserve/",
+    "total_price": 852.0,
+    "notified_at": "2026-10-29T10:31:11.279615+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "BRU",
