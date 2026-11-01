@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "BTS",
+    "destination_name": "Bratislava",
+    "price": 93,
+    "currency": "EUR",
+    "departure_at": "2026-12-22T20:35:00+01:00",
+    "return_at": "2027-01-02T11:25:00+01:00",
+    "airline": "FR",
+    "reason": "Buen precio para un vuelo directo de larga distancia a Bratislava con Ryanair.",
+    "flight_link": "https://www.aviasales.com/search/AGP2212BTS02011",
+    "hotel_name": "Faraway Aparthotel near Airport",
+    "hotel_price": 869.0,
+    "hotel_nights": 11,
+    "hotel_link": "https://www.hotels.com/ho3411280800/faraway-aparthotel-near-airport/",
+    "total_price": 962.0,
+    "notified_at": "2026-11-01T00:45:11.463961+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "BEG",
