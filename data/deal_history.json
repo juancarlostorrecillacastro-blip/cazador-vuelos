@@ -2,6 +2,20 @@
   {
     "origin": "AGP",
     "origin_name": "Málaga",
+    "destination": "WAW",
+    "destination_name": "Varsovia",
+    "price": 67,
+    "currency": "EUR",
+    "departure_at": "2026-11-27T07:40:00+01:00",
+    "return_at": "2026-12-01T20:50:00+01:00",
+    "airline": "FR",
+    "reason": "Muy buen precio para Polonia, incluso con escala. Notable.",
+    "flight_link": "https://www.aviasales.com/search/AGP2711WAW01121",
+    "notified_at": "2026-11-02T03:05:18.694415+00:00"
+  },
+  {
+    "origin": "AGP",
+    "origin_name": "Málaga",
     "destination": "BTS",
     "destination_name": "Bratislava",
     "price": 93,
