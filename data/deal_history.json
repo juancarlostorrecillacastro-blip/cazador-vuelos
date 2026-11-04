@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "POZ",
+    "destination_name": "Poznań",
+    "price": 56,
+    "currency": "EUR",
+    "departure_at": "2026-12-21T19:20:00+01:00",
+    "return_at": "2027-01-04T14:55:00+01:00",
+    "airline": "FR",
+    "reason": "Precio muy bueno para un destino en Polonia, un chollo para esta distancia.",
+    "flight_link": "https://www.aviasales.com/search/AGP2112POZ04011",
+    "hotel_name": "Apartamenty AR",
+    "hotel_price": 838.0,
+    "hotel_nights": 14,
+    "hotel_link": "https://www.hotels.com/ho2673430688/apartamenty-ar-poznan-polonia/",
+    "total_price": 894.0,
+    "notified_at": "2026-11-04T11:42:02.223144+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "CPH",
