@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "PAR",
+    "destination_name": "París",
+    "price": 71,
+    "currency": "EUR",
+    "departure_at": "2027-01-28T15:20:00+01:00",
+    "return_at": "2027-02-01T16:00:00+01:00",
+    "airline": "FR",
+    "reason": "Precio muy competitivo para un vuelo directo a una capital europea.",
+    "flight_link": "https://www.aviasales.com/search/SVQ2801PAR01021",
+    "hotel_name": "Villa Montmartre - Nouvellement rénovée",
+    "hotel_price": 413.0,
+    "hotel_nights": 4,
+    "hotel_link": "https://www.hotels.com/ho217264/",
+    "total_price": 484.0,
+    "notified_at": "2026-11-09T00:14:07.603066+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "POZ",
