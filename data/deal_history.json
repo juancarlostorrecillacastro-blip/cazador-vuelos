@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "FMM",
+    "destination_name": "Memmingen",
+    "price": 72,
+    "currency": "EUR",
+    "departure_at": "2027-01-17T13:55:00+01:00",
+    "return_at": "2027-01-22T11:00:00+01:00",
+    "airline": "FR",
+    "reason": "Muy buen precio para un vuelo internacional directo de larga distancia a Alemania.",
+    "flight_link": "https://www.aviasales.com/search/AGP1701FMM22011",
+    "hotel_name": "Apartment Storchenfärbe",
+    "hotel_price": 315.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho607133728/apartment-storchenfarbe-memmingen-alemania/",
+    "total_price": 387.0,
+    "notified_at": "2026-11-09T07:22:16.082893+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "PAR",
