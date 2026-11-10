@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "LIS",
+    "destination_name": "Lisboa",
+    "price": 28,
+    "currency": "EUR",
+    "departure_at": "2026-12-05T23:45:00+01:00",
+    "return_at": "2026-12-12T21:10:00Z",
+    "airline": "FR",
+    "reason": "Precio excepcional para una capital cercana, incluso para Ryanair.",
+    "flight_link": "https://www.aviasales.com/search/SVQ0512LIS12121",
+    "hotel_name": "Apartamentos Alfama - Elasticalendar",
+    "hotel_price": 389.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho4410773568/apartamentos-alfama-elasticalendar/",
+    "total_price": 417.0,
+    "notified_at": "2026-11-10T15:55:12.233760+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "GDN",
