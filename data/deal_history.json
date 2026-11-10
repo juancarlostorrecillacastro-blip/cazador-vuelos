@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "GDN",
+    "destination_name": "Danzig",
+    "price": 64,
+    "currency": "EUR",
+    "departure_at": "2026-12-21T11:10:00+01:00",
+    "return_at": "2027-01-04T06:25:00+01:00",
+    "airline": "FR",
+    "reason": "Muy buen precio para un vuelo de larga distancia a Polonia.",
+    "flight_link": "https://www.aviasales.com/search/AGP2112GDN04011",
+    "hotel_name": "Folks Village Plowce House",
+    "hotel_price": 548.0,
+    "hotel_nights": 14,
+    "hotel_link": "https://www.hotels.com/ho924651680/folks-village-plowce-house-gdansk-polonia/",
+    "total_price": 612.0,
+    "notified_at": "2026-11-10T07:55:34.566489+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "TBS",
