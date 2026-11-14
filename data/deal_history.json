@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "MIL",
+    "destination_name": "Milán",
+    "price": 35,
+    "currency": "EUR",
+    "departure_at": "2027-01-17T10:05:00+01:00",
+    "return_at": "2027-01-24T06:45:00+01:00",
+    "airline": "W4",
+    "reason": "Precio excepcional para ruta internacional de media distancia a ciudad importante.",
+    "flight_link": "https://www.aviasales.com/search/SVQ1701MIL24011",
+    "hotel_name": "notaMi - MANSARDE BELVEDERE DUOMO",
+    "hotel_price": 588.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho3569878432/notami-mansarde-belvedere-duomo/",
+    "total_price": 623.0,
+    "notified_at": "2026-11-14T00:00:49.071616+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "STO",
