@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "LON",
+    "destination_name": "Londres",
+    "price": 38,
+    "currency": "EUR",
+    "departure_at": "2027-01-14T19:55:00+01:00",
+    "return_at": "2027-01-19T16:00:00Z",
+    "airline": "U2",
+    "reason": "Precio extraordinario para Londres, especialmente con EasyJet. Muy raro encontrarlo tan bajo.",
+    "flight_link": "https://www.aviasales.com/search/AGP1401LON19011",
+    "hotel_name": "The Villa Kensington",
+    "hotel_price": 580.0,
+    "hotel_nights": 5,
+    "hotel_link": "https://www.hotels.com/ho282701/the-villa-kensington-londres-reino-unido/",
+    "total_price": 618.0,
+    "notified_at": "2026-11-14T22:47:47.916652+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "WAW",
