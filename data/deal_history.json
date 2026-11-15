@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "VIE",
+    "destination_name": "Viena",
+    "price": 66,
+    "currency": "EUR",
+    "departure_at": "2027-01-15T19:20:00+01:00",
+    "return_at": "2027-01-22T15:20:00+01:00",
+    "airline": "FR",
+    "reason": "Precio muy bueno para Europa Central (largo alcance) con Ryanair. Gran oferta.",
+    "flight_link": "https://www.aviasales.com/search/AGP1501VIE22011",
+    "hotel_name": "Space Home Apartment - Prater",
+    "hotel_price": 230.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho2879735232/space-homes-hostel-prater-dixcove-ghana/",
+    "total_price": 296.0,
+    "notified_at": "2026-11-15T22:13:24.284301+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "IBZ",
