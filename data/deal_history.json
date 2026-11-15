@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "IBZ",
+    "destination_name": "Ibiza",
+    "price": 51,
+    "currency": "EUR",
+    "departure_at": "2026-12-22T06:35:00+01:00",
+    "return_at": "2026-12-29T22:30:00+01:00",
+    "airline": "VY",
+    "reason": "Muy buen precio para Ibiza con Vueling.",
+    "flight_link": "https://www.aviasales.com/search/SVQ2212IBZ29121",
+    "hotel_name": "es grop apartamentos",
+    "hotel_price": 212.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho4361507392/es-grop-apartamentos/",
+    "total_price": 263.0,
+    "notified_at": "2026-11-15T17:29:26.065806+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "PAR",
