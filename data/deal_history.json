@@ -1,5 +1,24 @@
 [
   {
+    "origin": "SVQ",
+    "origin_name": "Ciudad de Sevilla",
+    "destination": "PAR",
+    "destination_name": "París",
+    "price": 57,
+    "currency": "EUR",
+    "departure_at": "2026-12-18T19:30:00+01:00",
+    "return_at": "2026-12-31T18:15:00+01:00",
+    "airline": "FR",
+    "reason": "Muy buen precio para un vuelo directo a París.",
+    "flight_link": "https://www.aviasales.com/search/SVQ1812PAR31121",
+    "hotel_name": "Citadines Montmartre Paris",
+    "hotel_price": 1629.0,
+    "hotel_nights": 13,
+    "hotel_link": "https://www.hotels.com/ho206330/citadines-montmartre-paris-paris-francia/",
+    "total_price": 1686.0,
+    "notified_at": "2026-11-18T03:13:09.875631+00:00"
+  },
+  {
     "origin": "AGP",
     "origin_name": "Málaga",
     "destination": "CPH",
