@@ -1,5 +1,24 @@
 [
   {
+    "origin": "AGP",
+    "origin_name": "Málaga",
+    "destination": "BRU",
+    "destination_name": "Bruselas",
+    "price": 39,
+    "currency": "EUR",
+    "departure_at": "2027-02-05T06:25:00+01:00",
+    "return_at": "2027-02-12T21:55:00+01:00",
+    "airline": "FR",
+    "reason": "Precio increíble para ruta media, muy por debajo de la media.",
+    "flight_link": "https://www.aviasales.com/search/AGP0502BRU12021",
+    "hotel_name": "Condo Gardens Brussels",
+    "hotel_price": 406.0,
+    "hotel_nights": 7,
+    "hotel_link": "https://www.hotels.com/ho479345/condo-gardens-brussels-bruselas-belgica/",
+    "total_price": 445.0,
+    "notified_at": "2026-11-25T15:05:58.587657+00:00"
+  },
+  {
     "origin": "SVQ",
     "origin_name": "Ciudad de Sevilla",
     "destination": "PAR",
